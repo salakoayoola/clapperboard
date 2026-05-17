@@ -121,7 +121,7 @@ Advanced Mode unlocks the full professional toolkit. It is a superset of Simple 
 | **INT / EXT Toggle** | Interior / Exterior marker on slate | P0 |
 | **DAY / NIGHT Toggle** | Day / Night marker on slate | P0 |
 | **MOS Toggle** | One-tap "Mit Out Sound" badge | P0 |
-| **NDK / NDF Toggle** | Non-Drop Frame marker | P0 |
+| **NDF Toggle** | Non-Drop Frame / Drop Frame timecode marker | P0 |
 | **Pick-Up Toggle** | Mark a shot as a pick-up (resumed from mid-scene) | P0 |
 | **Second Sticks** | Mark a second clap for the same take | P0 |
 | **Tail Slate** | Mode for slating at the *end* of a take instead of the beginning | P0 |
@@ -488,7 +488,7 @@ clapperboard/
 │                             │
 │  ┌─────────────────────┐   │
 │  │  SCENE: 12A   TAKE: 5│  ← Scene, Take (large)
-│  │  [MOS] [NDK] [PU]    │  ← Toggle badges
+│  │  [MOS] [NDF] [PU]    │  ← Toggle badges
 │  │                     │   │
 │  │  01:23:45:12        │   │  ← Timecode
 │  │  @ 24fps  NDF       │   │  ← FPS, Drop/Non-drop
@@ -597,7 +597,7 @@ clapperboard/
 | CSV / text export | ✅ | ✅ | ✅ |
 | Take rating (👍/👎) | ✅ | ✅ (circle/hold/bad) | ✅ (circle/hold/bad) |
 | Roll management | ❌ | ✅ | ✅ |
-| INT/EXT/DAY/NIGHT/MOS/NDK | ❌ | ✅ | ✅ |
+| INT/EXT/DAY/NIGHT/MOS/NDF | ❌ | ✅ | ✅ |
 | Pick-up / second sticks / tail | ❌ | ✅ | ✅ |
 | Custom fields | ❌ | ✅ | ✅ |
 | Production presets | ❌ | ✅ | ✅ |
@@ -625,17 +625,32 @@ clapperboard/
 
 | Metric | Conservative | Target | Optimistic |
 |--------|-------------|--------|------------|
-| Total Downloads (mostly Simple) | 75,000 | 200,000 | 600,000 |
-| Monthly Active Simple Users | 12,000 | 35,000 | 100,000 |
-| Simple → Advanced Trial Activation | 5% | 10% | 15% |
-| Advanced Individual Conversion | 3% | 6% | 10% |
-| Advanced Individual Subscribers | 360 | 2,100 | 15,000 |
+| Total Downloads (mostly Simple) | 5,000 | 15,000 | 40,000 |
+| Monthly Active Simple Users | 800 | 2,500 | 7,000 |
+| Simple → Advanced Trial Activation | 5% | 8% | 12% |
+| Advanced Individual Conversion | 3% | 5% | 8% |
+| Advanced Individual Subscribers | 24 | 125 | 560 |
 | ARPU (Individual) | $35/yr | $35/yr | $35/yr |
-| Team Productions | 10 | 80 | 400 |
+| Team Productions | 2 | 10 | 30 |
 | ARPU (Team) | $180/yr | $180/yr | $180/yr |
-| **Year 1 Revenue** | **$14,400** | **$88,000** | **$597,000** |
+| **Year 1 Revenue** | **$1,200** | **$6,175** | **$25,000** |
 
-**Note:** High Simple user retention (via quality free product) drives organic discovery and word-of-mouth, lowering customer acquisition cost over time.
+**Note:** As a passion project with organic-only growth, these projections assume zero paid marketing spend. Revenue compounds as the free tier builds community trust and word-of-mouth.
+
+### 8.4 Marketing & Distribution
+
+No marketing budget — distribution is organic. The strategy is to make Simple Mode so good that filmmakers tell other filmmakers.
+
+| Channel | Action | Cost |
+|---------|--------|------|
+| **Reddit** | Active presence in r/filmmaking, r/cinematography, r/videography | Free |
+| **YouTube** | Seed to indie filmmaker/gear reviewers (Gerald Undone, etc.) | Free |
+| **Film Schools** | Outreach to film programs with educational use case | Free |
+| **Film Festivals** | Demo at local/indie festivals, QR codes at networking events | Minimal |
+| **App Store Optimization** | Keyword-optimized listing, localized screenshots | Free |
+| **Cross-Promotion** | Partner with complementary tools (shot-listing, call sheet apps) | Free |
+
+**Key Insight:** The free tier *is* the marketing. Every student who uses Clapperboard on a short film becomes a potential evangelist on their next paid gig.
 
 ---
 
@@ -661,11 +676,11 @@ clapperboard/
 
 **Deliverable:** v0.9.0 — Simple Mode private beta
 
-### Phase 2: Advanced Mode Core (Weeks 7–12)
-**Goal:** Unlock the professional toolkit. Same app, one tap away.
+### Phase 2: Advanced Mode Core (Weeks 7–14)
+**Goal:** Unlock the professional toolkit. Same app, one tap away. Ship the subscription and validate the conversion funnel before adding companion features.
 
 - [ ] Mode toggle (Simple ↔ Advanced) with first-use confirmation
-- [ ] Advanced slate: Roll, INT/EXT, DAY/NIGHT, MOS, NDK, Pick-Up, Second Sticks, Tail Slate
+- [ ] Advanced slate: Roll, INT/EXT, DAY/NIGHT, MOS, NDF, Pick-Up, Second Sticks, Tail Slate
 - [ ] Full FPS support: 23.976, 24, 25, 29.97, 30, 50, 59.94, 60fps + DF/NDF
 - [ ] Production presets (save/recall full configurations)
 - [ ] Custom fields (user-defined slate fields)
@@ -673,34 +688,33 @@ clapperboard/
 - [ ] PDF shot log export
 - [ ] Circle/Print/Hold/Bad take ratings + editor notes
 - [ ] Voice notes attachment
-- [ ] In-app purchase integration (RevenueCat)
-- [ ] 7-day Advanced trial flow
-- [ ] Apple Watch companion app (remote clap, timecode display)
-- [ ] Voice control (Siri / Google Assistant)
-- [ ] Music video mode (BPM, count-in, timecode offset)
 - [ ] GPS location logging
 - [ ] Photo thumbnail attachment
+- [ ] In-app purchase integration (RevenueCat)
+- [ ] 7-day Advanced trial flow
 
 **Deliverable:** v1.0.0 — App Store / Play Store launch (Simple free, Advanced subscription)
 
-### Phase 3: Sync & Collaboration (Weeks 13–20)
-**Goal:** Turn Clapperboard into a team tool.
+### Phase 3: Sync, Collaboration & Companion Features (Weeks 15–24)
+**Goal:** Turn Clapperboard into a team tool and expand the feature surface based on v1.0 user feedback.
 
 - [ ] Supabase backend + auth (magic link, social OAuth)
-- [ ] Cloud sync + backup (offline-first architecture)
-- [ ] Bluetooth timecode jam (Tentacle Sync E, Atomos, UltraSync BLUE)
+- [ ] Cloud sync + backup (offline-first CRDT architecture)
 - [ ] Real-time collaboration (multi-device sync)
 - [ ] Team invites (link, QR, email)
+- [ ] Bluetooth timecode jam (Tentacle Sync E, Atomos, UltraSync BLUE)
+- [ ] Apple Watch companion app (remote clap, timecode display)
+- [ ] Voice control (Siri / Google Assistant)
+- [ ] Music video mode (BPM, count-in, timecode offset)
 - [ ] Sound report PDF generation
 - [ ] FCPXML / Premiere XML / DaVinci Resolve EDL export
 - [ ] JSON export for custom pipelines
-- [ ] Web dashboard for producers
 - [ ] Role-based permissions (Viewer, Logger, Admin)
 - [ ] Analytics + crash reporting (PostHog, Sentry)
 
-**Deliverable:** v1.5.0 — Team-ready professional tool
+**Deliverable:** v1.5.0 — Team-ready professional tool with companion experiences
 
-### Phase 4: Ecosystem (Weeks 21–32)
+### Phase 4: Ecosystem (Weeks 25–36)
 **Goal:** Deep integration with the professional filmmaking ecosystem.
 
 - [ ] Camera Wi-Fi integration (RED, Sony, Canon)
@@ -709,6 +723,7 @@ clapperboard/
 - [ ] AI speech-to-script notes
 - [ ] Siri Shortcuts / Android Intents deep integration
 - [ ] Widget support (timecode, next take)
+- [ ] Web dashboard for producers / DITs
 - [ ] Public API for third-party integrations
 - [ ] Localization (Spanish, French, German, Japanese, Chinese)
 - [ ] Accessibility audit + improvements
@@ -717,7 +732,34 @@ clapperboard/
 
 ---
 
-## 10. Risks & Mitigations
+## 10. Data Privacy & Compliance
+
+### 10.1 Data Classification
+
+| Data Type | Sensitivity | Storage | Encryption |
+|-----------|------------|---------|------------|
+| Production names, crew names | Medium | Local (MMKV) + Cloud (Supabase) | AES-256 at rest, TLS in transit |
+| Shot log metadata | Medium | Local + Cloud | AES-256 at rest, TLS in transit |
+| GPS coordinates | High | Local + Cloud (opt-in only) | AES-256 at rest, TLS in transit |
+| Voice notes / audio | High | Local + Cloud (user-initiated upload) | AES-256 at rest, TLS in transit |
+| Photo thumbnails | Medium | Local + Cloud (user-initiated upload) | AES-256 at rest, TLS in transit |
+| Account credentials | Critical | Supabase Auth (never stored locally) | Hashed, TLS in transit |
+
+### 10.2 Compliance
+
+- **GDPR:** Users can export and delete all personal data from Settings. Cloud data purged within 30 days of account deletion. No data processed for advertising.
+- **CCPA:** No data sold to third parties. Analytics (PostHog) configured for privacy-first collection with IP anonymisation.
+- **On-Set NDA Compliance:** Production metadata never leaves the device in Simple Mode (no cloud, no analytics payloads containing production names). In Advanced Mode with cloud sync, data is isolated per-production with no cross-production leakage.
+
+### 10.3 Offline-First Data Principles
+
+1. **Simple Mode is fully offline.** No network requests. No accounts. No telemetry.
+2. **Cloud sync is opt-in** — only activated when the user explicitly signs in and enables sync.
+3. **Local data ownership** — all shot logs exist on-device first; cloud is a sync target, not the source of truth.
+
+---
+
+## 11. Risks & Mitigations
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
@@ -734,16 +776,16 @@ clapperboard/
 
 ---
 
-## 11. Appendix
+## 12. Appendix
 
-### 11.1 Glossary
+### 12.1 Glossary
 
 | Term | Definition |
 |------|-----------|
 | **2nd AC** | Second Assistant Camera — operates slate, loads media, manages lenses |
 | **DOP / DP** | Director of Photography — head of camera/lighting department |
 | **MOS** | Mit Out Sound — shot without synchronized sound |
-| **NDK / NDF** | Non-Drop Frame timecode marker |
+| **NDF** | Non-Drop Frame timecode — counts every frame without skipping (see DF / NDF) |
 | **Pick-Up** | Resuming a shot from a specific point, not from the top |
 | **Second Sticks** | A second clap used when the first was missed or unclear |
 | **Tail Slate** | Slate recorded at the *end* of a take instead of the beginning |
@@ -754,19 +796,20 @@ clapperboard/
 | **Simple Mode** | The minimal, default clapperboard experience — always free |
 | **Advanced Mode** | The full professional toolkit — subscription required |
 
-### 11.2 Reference Materials
+### 12.2 Reference Materials
 - [StudioBinder: How to Use a Film Slate](https://www.studiobinder.com/blog/how-to-use-a-film-slate/)
 - [In Depth Cine: Clapperboard Guide](https://www.indepthcine.com/videos/clapperboard)
 - MovieSlate 8 Feature Documentation
 - Timecode Marker (BIG STORY FILMMAKING SERVICE) — App Store research
 - SMPTE 12M Timecode Standard
 
-### 11.3 Change Log
+### 12.3 Change Log
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0.0 | 2026-05-17 | Initial PRD draft |
 | 1.1.0 | 2026-05-17 | Added Marker (Timecode Marker) to competitive analysis; restructured entire product into Simple Mode (free) and Advanced Mode (subscription) with explicit feature separation, updated user flows, UI mockups, business model, roadmap, and risk analysis |
+| 1.2.0 | 2026-05-17 | Fixed NDK→NDF terminology throughout; recalibrated revenue projections for passion-project scale; added §8.4 Marketing & Distribution; de-scoped Phase 2 (moved Watch, Voice Control, Music Mode to Phase 3); rebalanced Phase 3/4 timelines; added §10 Data Privacy & Compliance (data classification, GDPR/CCPA, NDA compliance, offline-first principles); added Web Dashboard to Phase 4 |
 
 ---
 
