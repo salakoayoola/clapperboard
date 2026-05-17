@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity } fro
 import { useSlateStore } from '../store/useSlateStore';
 import { colors } from '../theme/colors';
 import { ClapperSticks } from './ClapperSticks';
+import { TimecodeDisplay } from './TimecodeDisplay';
 
 export function SlateBoard() {
   const { production, director, dop, scene, take, fps, setField } = useSlateStore();
@@ -72,7 +73,7 @@ export function SlateBoard() {
           </View>
 
           <View style={styles.timecodeWrapper}>
-            <Text style={styles.timecode}>01:23:45:12</Text>
+            <TimecodeDisplay fps={fps} />
             <Text style={styles.fps}>@ {fps}fps</Text>
           </View>
         </View>
@@ -186,12 +187,6 @@ const styles = StyleSheet.create({
   },
   timecodeWrapper: {
     alignItems: 'center',
-  },
-  timecode: {
-    color: colors.textPrimary,
-    fontFamily: 'SpaceMono-Bold',
-    fontSize: 48,
-    letterSpacing: 1,
   },
   fps: {
     color: colors.textSecondary,
