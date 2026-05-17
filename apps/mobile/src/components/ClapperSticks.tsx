@@ -1,36 +1,106 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withSequence, withTiming, Easing, runOnJS } from 'react-native-reanimated';
+import { Audio } from 'expo-av';
+import * as Haptics from 'expo-haptics';
+import { useSlateStore } from '../store/useSlateStore';
 import { colors } from '../theme/colors';
 
 export function ClapperSticks() {
+  const { isSoundEnabled, toggleSound, incrementTake } = useSlateStore();
+  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  
+  const rotation = useSharedValue(-15);
+
+  useEffect(() => {
+    async function loadSound() {
+      try {
+        const { sound: s } = await Audio.Sound.createAsync(
+          require('../../assets/clap.wav')
+        );
+        setSound(s);
+      } catch (e) {
+        console.warn('Could not load clap sound', e);
+      }
+    }
+    loadSound();
+
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
+  }, []);
+
+  const triggerClapEffects = async () => {
+    // 1. Trigger haptic feedback immediately on close
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+
+    // 2. Play sound if enabled
+    if (isSoundEnabled && sound) {
+      await sound.replayAsync();
+    }
+
+    // 3. Increment take number
+    incrementTake();
+  };
+
+  const handleClap = () => {
+    // Animate the stick closing, trigger effects, then animate opening
+    rotation.value = withSequence(
+      withTiming(0, { duration: 100, easing: Easing.in(Easing.ease) }, (finished) => {
+        if (finished) {
+          runOnJS(triggerClapEffects)();
+        }
+      }),
+      withSpring(-15, { damping: 15, stiffness: 100 })
+    );
+  };
+
+  const animatedStickStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
+
   return (
     <View style={styles.container}>
-      {/* Top Stick */}
-      <View style={[styles.stick, styles.topStick]}>
-        <View style={styles.stripeBlack} />
-        <View style={styles.stripeWhite} />
-        <View style={styles.stripeBlack} />
-        <View style={styles.stripeWhite} />
-        <View style={styles.stripeBlack} />
-        <View style={styles.stripeWhite} />
-        <View style={styles.stripeBlack} />
-      </View>
-      
-      {/* Bottom Stick */}
-      <View style={styles.stick}>
-        <View style={styles.stripeBlack} />
-        <View style={styles.stripeWhite} />
-        <View style={styles.stripeBlack} />
-        <View style={styles.stripeWhite} />
-        <View style={styles.stripeBlack} />
-        <View style={styles.stripeWhite} />
-        <View style={styles.stripeBlack} />
+      <TouchableOpacity activeOpacity={0.8} onPress={handleClap} style={styles.touchableArea}>
+        {/* Top Stick (Animated) */}
+        <Animated.View style={[styles.stick, styles.topStick, animatedStickStyle]}>
+          <View style={styles.stripeBlack} />
+          <View style={styles.stripeWhite} />
+          <View style={styles.stripeBlack} />
+          <View style={styles.stripeWhite} />
+          <View style={styles.stripeBlack} />
+          <View style={styles.stripeWhite} />
+          <View style={styles.stripeBlack} />
+        </Animated.View>
         
-        {/* Sound Toggle */}
-        <View style={styles.soundToggleWrapper}>
-          <Text style={styles.soundToggleText}>🔊</Text>
+        {/* Bottom Stick */}
+        <View style={styles.stick}>
+          <View style={styles.stripeBlack} />
+          <View style={styles.stripeWhite} />
+          <View style={styles.stripeBlack} />
+          <View style={styles.stripeWhite} />
+          <View style={styles.stripeBlack} />
+          <View style={styles.stripeWhite} />
+          <View style={styles.stripeBlack} />
+          
+          {/* Sound Toggle */}
+          <TouchableOpacity 
+            style={styles.soundToggleWrapper} 
+            onPress={(e) => {
+              e.stopPropagation();
+              toggleSound();
+            }}
+          >
+            <Text style={styles.soundToggleText}>
+              {isSoundEnabled ? '🔊' : '🔇'}
+            </Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -39,6 +109,10 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 24,
     height: 80,
+    justifyContent: 'flex-end',
+  },
+  touchableArea: {
+    flex: 1,
     justifyContent: 'flex-end',
   },
   stick: {
@@ -52,10 +126,9 @@ const styles = StyleSheet.create({
   },
   topStick: {
     position: 'absolute',
-    top: 0,
+    bottom: 36,
     width: '100%',
-    transform: [{ rotate: '-10deg' }],
-    transformOrigin: 'top left',
+    transformOrigin: 'left bottom',
     zIndex: 10,
   },
   stripeBlack: {
@@ -84,6 +157,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: colors.textPrimary,
     borderWidth: 2,
+    zIndex: 20,
   },
   soundToggleText: {
     fontSize: 20,
